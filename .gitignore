@@ -40,3 +40,8 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# .NET / SQLite (local dev DB created by MediDossier.Api seed)
+backend/**/*.db
+backend/**/*.db-shm
+backend/**/*.db-wal

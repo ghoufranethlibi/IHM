@@ -1,0 +1,34 @@
+<div class="login-page">
+  <div class="login-card">
+    <h1>Créer un compte</h1>
+    <p class="hint">MédiDossier — inscription utilisateur</p>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <label>
+        <span>Email</span>
+        <input type="email" formControlName="email" autocomplete="username" [disabled]="loading" />
+      </label>
+
+      <label>
+        <span>Mot de passe</span>
+        <input type="password" formControlName="password" autocomplete="new-password" [disabled]="loading" />
+      </label>
+
+      <label>
+        <span>Rôle</span>
+        <select formControlName="role" [disabled]="loading">
+          <option *ngFor="let role of roleOptions; trackBy: trackByRole" [value]="role.value">{{ role.label }}</option>
+        </select>
+      </label>
+
+      <p class="error" *ngIf="errorMsg">{{ errorMsg }}</p>
+      <p class="success" *ngIf="successMsg">{{ successMsg }}</p>
+
+      <button type="submit" [disabled]="loading || form.invalid">
+        {{ loading ? 'Création…' : 'Créer le compte' }}
+      </button>
+    </form>
+
+    <a class="link" routerLink="/auth/login">Déjà un compte ? Se connecter</a>
+  </div>
+</div>

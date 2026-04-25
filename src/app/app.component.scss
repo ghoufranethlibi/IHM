@@ -1,0 +1,16 @@
+.route-loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  z-index: 2000;
+  background: linear-gradient(90deg, transparent 0%, #534ab7 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: loadingSlide 1s linear infinite;
+}
+
+@keyframes loadingSlide {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

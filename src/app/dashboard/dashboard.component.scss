@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap');
+
+.dashboard-page {
+  padding: 16px;
+  width: 100%;
+  font-family: 'DM Sans', sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+// ── WELCOME BANNER ───────────────────────────────────────────────
+.welcome-banner {
+  border-radius: 16px;
+  overflow: hidden;
+  border: 0.5px solid rgba(0,0,0,0.07);
+}
+.banner-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px 32px;
+}
+.banner-medecin, .banner-infirmier, .banner-agent, .banner-patient { background: linear-gradient(135deg, #3d348f 0%, #534ab7 100%); }
+
+.banner-greeting { font-size: 13px; color: rgba(255,255,255,0.6); margin-bottom: 6px; }
+.banner-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 30px;
+  color: #fff;
+  margin-bottom: 8px;
+}
+.banner-sub { font-size: 14px; color: rgba(255,255,255,0.55); max-width: 460px; line-height: 1.5; }
+
+.banner-role-icon {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.icon-medecin, .icon-infirmier, .icon-agent, .icon-patient { background: rgba(255,255,255,0.2); color: #efeefe; }
+
+// ── STATS ROW ────────────────────────────────────────────────────
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+.stat-card {
+  background: #fff;
+  border: 0.5px solid #e8e6e0;
+  border-radius: 12px;
+  padding: 18px 20px;
+}
+.stat-label { font-size: 12px; color: #888780; margin-bottom: 8px; }
+.stat-value { font-size: 28px; font-weight: 600; color: #1a1a1a; line-height: 1; margin-bottom: 6px; }
+.empty-state { border: 1px dashed #d4d0fb; border-radius: 10px; padding: 16px; color: #6a6790; background: #fbfaff; }
+
+// ── SECTION HEADER ───────────────────────────────────────────────
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.section-title { font-size: 15px; font-weight: 600; color: #1a1a1a; }
+.section-badge {
+  font-size: 11px; font-weight: 500;
+  background: #f0ede8; color: #888780;
+  padding: 2px 10px; border-radius: 10px;
+}
+
+// ── QUICK ACTIONS ────────────────────────────────────────────────
+.actions-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.action-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  background: #fff;
+  border: 0.5px solid #e8e6e0;
+  border-radius: 12px;
+  cursor: pointer;
+  text-align: left;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.15s;
+
+  &:hover {
+    border-color: #c8c4bc;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    transform: translateX(2px);
+    .action-arrow { opacity: 1; transform: translateX(0); }
+  }
+}
+
+.action-icon {
+  width: 46px; height: 46px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.action-blue, .action-teal, .action-green, .action-amber, .action-purple { background: #eeedfe; color: #3d348f; }
+
+.action-text { flex: 1; }
+.action-name { font-size: 14px; font-weight: 500; color: #1a1a1a; }
+.action-desc { font-size: 12px; color: #888780; margin-top: 2px; }
+
+.action-arrow {
+  color: #ccc;
+  opacity: 0.5;
+  transform: translateX(-4px);
+  transition: all 0.15s;
+}
+
+// ── RESPONSIVE ───────────────────────────────────────────────────
+@media (max-width: 900px) {
+  .dashboard-page { padding: 12px; }
+  .stats-row { grid-template-columns: repeat(2, 1fr); }
+  .banner-role-icon { display: none; }
+}

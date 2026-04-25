@@ -1,0 +1,88 @@
+<!-- src/app/features/dossier/consultation/consultation.component.html -->
+<div class="dossier-page">
+  <div class="page-header">
+    <button class="btn-back" (click)="goBack()">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Retour
+    </button>
+    <div class="page-header-info">
+      <h1 class="page-title">Consultations</h1>
+      <div class="patient-tag" *ngIf="dossier">
+        {{ dossier.donneesPersonnelles.prenom }} {{ dossier.donneesPersonnelles.nom }}
+      </div>
+    </div>
+    <button class="btn-add-consult" *ngIf="canAdd" (click)="showForm = !showForm">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M7 2v10M2 7h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      Nouvelle consultation
+    </button>
+  </div>
+
+  <!-- ADD FORM -->
+  <div class="add-form-card" *ngIf="showForm && canAdd" @slideDown>
+    <div class="form-card-header">
+      <div class="form-card-title">Nouvelle consultation</div>
+      <div class="form-card-sub">{{ today | date:'dd/MM/yyyy' }} — Dr. {{ auth.currentUser?.email }}</div>
+    </div>
+
+    <form [formGroup]="consultForm" (ngSubmit)="submitConsultation()" class="consult-form">
+      <div class="form-group">
+        <label class="form-label">Diagnostic (titre) *</label>
+        <input formControlName="diagnosticTitre" class="form-input" placeholder="Ex: Infection respiratoire" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Diagnostic (description) *</label>
+        <textarea formControlName="diagnosticDescription" class="form-textarea" rows="4" placeholder="Description médicale détaillée"></textarea>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn-cancel" (click)="showForm = false">Annuler</button>
+        <button type="submit" class="btn-submit" [disabled]="consultForm.invalid || submitting">
+          <span *ngIf="!submitting">Enregistrer la consultation</span>
+          <span *ngIf="submitting">Enregistrement...</span>
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- SUCCESS MSG -->
+  <div class="success-bar" *ngIf="successMsg">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <circle cx="8" cy="8" r="6.5" stroke="#0F6E56" stroke-width="1.2"/>
+      <path d="M5 8l2 2 4-4" stroke="#0F6E56" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    {{ successMsg }}
+  </div>
+
+  <!-- CONSULTATIONS LIST -->
+  <div class="consultations-list" *ngIf="consultations.length > 0">
+    <div class="consult-card" *ngFor="let c of consultations; trackBy: trackByConsultation">
+      <div class="consult-card-header">
+        <div class="consult-date-badge">{{ c.date | date:'dd MMM yyyy' }}</div>
+        <div class="consult-doctor">Consultation médicale</div>
+      </div>
+      <div class="consult-body">
+        <div class="consult-section">
+          <div class="consult-section-label">Diagnostic</div>
+          <div class="consult-section-val">{{ c.diagnosticTitre }}</div>
+        </div>
+        <div class="consult-section">
+          <div class="consult-section-label">Description</div>
+          <div class="consult-section-val">{{ c.diagnosticDescription }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="empty-state" *ngIf="consultations.length === 0 && !showForm">
+    <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+      <rect x="8" y="8" width="24" height="24" rx="4" stroke="#ccc" stroke-width="1.5"/>
+      <path d="M14 16h12M14 20.5h8" stroke="#ccc" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+    <div class="empty-title">Aucune consultation enregistrée</div>
+    <div class="empty-sub" *ngIf="canAdd">Cliquez sur "Nouvelle consultation" pour commencer.</div>
+  </div>
+</div>

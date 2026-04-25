@@ -1,0 +1,79 @@
+.shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f6f5fb;
+}
+
+.shell-header {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 0 20px;
+  min-height: 64px;
+  background: #534ab7;
+  color: #fff;
+  border-bottom: 1px solid #43399c;
+}
+
+.brand {
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+}
+
+.shell-nav {
+  display: flex;
+  gap: 16px;
+  flex: 1;
+
+  a {
+    color: rgba(255, 255, 255, 0.75);
+    text-decoration: none;
+    font-size: 0.95rem;
+    padding: 8px 10px;
+    border-radius: 8px;
+
+    &:hover,
+    &.active {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.15);
+    }
+  }
+}
+
+.logout {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: #fff;
+  padding: 6px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.08);
+  }
+}
+
+.breadcrumbs {
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  background: #eeedfe;
+  border-bottom: 1px solid #d9d5fb;
+  font-size: 0.82rem;
+  color: #6b62c8;
+}
+
+.crumb.current {
+  color: #3d348f;
+  font-weight: 600;
+}
+
+.shell-main {
+  flex: 1;
+  padding: 0 12px 12px;
+}

@@ -1,0 +1,140 @@
+<!-- src/app/features/dashboard/dashboard.component.html -->
+<div class="dashboard-page">
+
+  <!-- Welcome Banner -->
+  <div class="welcome-banner" [ngClass]="'banner-' + roleClass">
+    <div class="banner-content">
+      <div class="banner-text">
+        <div class="banner-greeting">Bonjour, {{ user?.prenom }} 👋</div>
+        <h1 class="banner-title">{{ roleWelcome }}</h1>
+        <p class="banner-sub">{{ roleDescription }}</p>
+      </div>
+      <div class="banner-role-icon" [ngClass]="'icon-' + roleClass">
+        <ng-container *ngIf="roleClass === 'medecin'">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+            <circle cx="18" cy="11" r="6" stroke="currentColor" stroke-width="2"/>
+            <path d="M4 32c0-7.7 6.3-14 14-14s14 6.3 14 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M18 23v6M15 26h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </ng-container>
+        <ng-container *ngIf="roleClass === 'infirmier'">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+            <path d="M3 18h6l4-12 6 22 4-14 3 4h7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </ng-container>
+        <ng-container *ngIf="roleClass === 'agent'">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+            <path d="M11 4v10L6 28h24L25 14V4" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M10 4h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="18" cy="22" r="3.5" stroke="currentColor" stroke-width="2"/>
+          </svg>
+        </ng-container>
+        <ng-container *ngIf="roleClass === 'patient'">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+            <path d="M18 4L4 10v8c0 9 6.3 16.5 14 18.5C25.7 34.5 32 27 32 18v-8L18 4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M12.5 18l4 4 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats Row -->
+  <div class="stats-row">
+    <div class="stat-card" *ngFor="let s of stats; trackBy: trackByStat">
+      <div class="stat-label">{{ s.label }}</div>
+      <div class="stat-value">{{ s.value }}</div>
+    </div>
+  </div>
+  <div class="empty-state" *ngIf="stats.length === 0">
+    Les indicateurs de synthèse ne sont pas disponibles pour votre rôle. Utilisez les actions rapides ci-dessous.
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="section-header">
+    <h2 class="section-title">Actions rapides</h2>
+  </div>
+  <div class="actions-grid">
+    <button class="action-card" (click)="goSearch()" *ngIf="canSearch">
+      <div class="action-icon action-blue">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+          <circle cx="9.5" cy="9.5" r="6.5" stroke="currentColor" stroke-width="1.6"/>
+          <path d="M15 15l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="action-text">
+        <div class="action-name">Chercher un patient</div>
+        <div class="action-desc">Via le code secret du patient</div>
+      </div>
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="action-arrow">
+        <path d="M4 7h6M7 4l3 3-3 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+
+    <button class="action-card" (click)="goConsultation()" *ngIf="canConsult">
+      <div class="action-icon action-teal">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+          <rect x="3" y="3" width="16" height="16" rx="2.5" stroke="currentColor" stroke-width="1.6"/>
+          <path d="M7 8h8M7 11.5h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          <path d="M15 14v4M13 16h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="action-text">
+        <div class="action-name">Nouvelle consultation</div>
+        <div class="action-desc">Ajouter au dossier patient</div>
+      </div>
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="action-arrow">
+        <path d="M4 7h6M7 4l3 3-3 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+
+    <button class="action-card" (click)="goVitaux()" *ngIf="canVitaux">
+      <div class="action-icon action-green">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+          <path d="M2 11h3.5l3-8 4 15 3-9 2.5 4H20" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="action-text">
+        <div class="action-name">Saisir données vitaux</div>
+        <div class="action-desc">Tension, pouls, température...</div>
+      </div>
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="action-arrow">
+        <path d="M4 7h6M7 4l3 3-3 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+
+    <button class="action-card" (click)="goExamens()" *ngIf="canExamen">
+      <div class="action-icon action-amber">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+          <path d="M7 3v7L4 17h14l-3-7V3" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+          <path d="M6.5 3h9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="11" cy="13" r="2.5" stroke="currentColor" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <div class="action-text">
+        <div class="action-name">Ajouter un examen</div>
+        <div class="action-desc">Analyse ou imagerie médicale</div>
+      </div>
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="action-arrow">
+        <path d="M4 7h6M7 4l3 3-3 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+
+    <button class="action-card" (click)="goMonDossier()" *ngIf="isPatient">
+      <div class="action-icon action-purple">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+          <path d="M11 2L3 5.5v5c0 5.25 3.5 9.75 8 11 4.5-1.25 8-5.75 8-11v-5L11 2z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+          <path d="M7.5 11l2.5 2.5 4.5-4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="action-text">
+        <div class="action-name">Mon dossier médical</div>
+        <div class="action-desc">Consulter vos informations</div>
+      </div>
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="action-arrow">
+        <path d="M4 7h6M7 4l3 3-3 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </div>
+
+</div>
